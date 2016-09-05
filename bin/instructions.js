@@ -1,4 +1,3 @@
-const fmt = require('util').format
 const errors = require('./error.js')
 
 function boxAndFilter(arrayOrString) {

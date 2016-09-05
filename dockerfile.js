@@ -5,4 +5,3 @@ function Dockerfile() {
 }
 
 module.exports.instructions = ins
-
