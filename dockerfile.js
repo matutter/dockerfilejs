@@ -1,7 +1,7 @@
-const ins = require('./bin/instructions.js')
+const ins = require('./bin/instruction.js')
 
 function Dockerfile() {
 
 }
 
-module.exports.instructions = ins
+module.exports.instruction = ins

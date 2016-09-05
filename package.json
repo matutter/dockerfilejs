@@ -10,9 +10,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha ./test",
-    "test-no-colors": "mocha ./test --no-colors",
-    "test-w-coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/"
+    "test": "mocha ./test --recursive",
+    "test-no-colors": "mocha ./test --recursive --no-colors",
+    "test-w-coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --recursive -- -R spec ./test/"
   },
   "repository": {
     "type": "git",
