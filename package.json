@@ -1,0 +1,31 @@
+{
+  "name": "dockerfilejs",
+  "version": "1.0.0",
+  "description": "Dockerfile-js, render well-formed Dockerfiles.",
+  "main": "dockerfile.js",
+  "bin": {
+    "dockerfilejs": "error.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha ./test",
+    "test-no-colors": "mocha ./test --no-colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/matutter/dockerfilejs.git"
+  },
+  "keywords": [
+    "docker",
+    "dockerfile",
+    "generator"
+  ],
+  "author": "matutter <mcutter.svc@gmail.com> (https://www.npmjs.com/profile/matutter)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matutter/dockerfilejs/issues"
+  },
+  "homepage": "https://github.com/matutter/dockerfilejs#readme"
+}
