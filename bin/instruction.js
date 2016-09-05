@@ -52,7 +52,7 @@ function from(from) {
 
 function maintainer(maintainer) {
   var instruction = null
-  const name = maintainer.name
+  const name = maintainer.name || maintainer
 
   if(name) {
     instruction = `MAINTAINER ${name}`
@@ -69,7 +69,7 @@ function enQuote(string) {
 
 function mapToQuote(string) {
   if(/\s/g.test(string))
-    return enQuote(string)
+    string = enQuote(string)
   return string
 }
 
@@ -193,10 +193,11 @@ function cmd(cmd) {
 function entryPoint(entrypoint) {
   var instruction = null
 
-  entrypoint = boxAndFilter(entrypoint)
+  const executable = entrypoint.executable
+  entrypoint = boxAndFilter(entrypoint.params)
 
   if(entrypoint.length) {
-    instruction = `ENTRYPOINT [${entrypoint.map(mapToQuote).join(', ')}]`
+    instruction = `ENTRYPOINT ["${executable}", ${entrypoint.map(mapToQuote).join(', ')}]`
   } else {
     throw new errors.InstructionError('entrypoint', 'expected string or array of arguments.')
   }
@@ -209,7 +210,6 @@ function entryPoint(entrypoint) {
 */
 function flattenLabels(o, namespace) {
   namespace = namespace || []
-  var length = 0
   var r = []
   var ns = namespace.join('.')
 
@@ -217,7 +217,6 @@ function flattenLabels(o, namespace) {
 
   Object.keys(o).forEach( key => {
     const val = o[key]
-    length++
     if(typeof val === 'string')
       return r.push([ns+key, val])
 
@@ -242,7 +241,6 @@ function label(labels, onbuild) {
   labels = flattenLabels(labels)
   var instruction = null
 
-  // this is assumes a length of 1+ if not null
   if(labels && labels.length) {
     instruction = `LABEL ${labels.map(mapLabel).join(' \\\n      ')}`
   } else {
@@ -310,7 +308,9 @@ function expose(expose, onbuild) {
 /**
 * ENV <key> <value>
 * ENV <key>=<value> ...
-*
+* 
+* Parameters:
+*   1) Any object with terminal property-values of string, or number type.
 */
 function env(env, onbuild) {
   var instruction = null
@@ -438,9 +438,8 @@ function comment() {
   if(arguments.length == 0)
     return '#'
   var args = []
-  for(var i = 0; i < arguments.length; ++i) {
+  for(var i = 0; i < arguments.length; ++i)
     args.push(arguments[i])
-  }
   return '# ' + args.map(arg => arg ? arg.toString() : arg).join(' ') 
 }
 

@@ -82,7 +82,6 @@ res = ins.expose([8000, '8001', {number: 433, protocol: 'tcp'}, {from: 8080, to:
 res = ins.expose([{number: 433}], true)
 res = ins.env({key: 'val', key2: 'val 2'})
 
-res = ins.copy({src: '/file.txt', dest: '/file.txt'})
 res = ins.volume(['/var/log', '/root/.ssh'])
 res = ins.healthCheck({
   options : {
