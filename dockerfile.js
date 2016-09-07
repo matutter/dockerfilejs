@@ -8,39 +8,40 @@ function InstructionWrap(name, data, on_build_flag, fn) {
   this.fn = fn
 }
 
-function DockerfileAppend(ref) {
-  this.end = () => ref
+function Dockerfile() {
+  var steps = []
+  this._separator = '\n\n'
+  this.steps = () => steps
+  this.append = (step) => {
+    steps.push(step);
+    return this
+  }
+  this.prepend = (step) => {
+    steps.unshift(step);
+    return this
+  }
+  this.splice = (start, step) => {
+    steps.splice(start, 0, step)
+    return this
+  }
 }
-
 Object.keys(instruction).forEach(name => {
   const fn = instruction[name]
   if(name == 'from') {
-    DockerfileAppend.prototype[name] = function(data, on_build_flag) {
-      this.end().prependStep(new InstructionWrap(name, data, on_build_flag, fn))
+    Dockerfile.prototype[name] = function(data, on_build_flag) {
+      var from = new InstructionWrap(name, data, on_build_flag, fn)
+      var start = this.steps().findIndex(step => step.name != 'comment')
+      console.log('insert FROM @', start)
+      this.splice(start, from)
       return this
     }
   } else {
-    DockerfileAppend.prototype[name] = function(data, on_build_flag) {
-      this.end().appendStep(new InstructionWrap(name, data, on_build_flag, fn))
+    Dockerfile.prototype[name] = function(data, on_build_flag) {
+      this.append(new InstructionWrap(name, data, on_build_flag, fn))
       return this
     }
   }
 })
-
-function Dockerfile() {
-  var steps = []
-  this._separator = '\n\n'
-  this.append = new DockerfileAppend(this)
-  this.steps = () => steps
-  this.appendStep = (step) => {
-    steps.push(step);
-    return this
-  }
-  this.prependStep = (step) => {
-    steps.unshift(step);
-    return this
-  }
-}
 
 /** set step / section separator */
 Dockerfile.prototype.separator = function(separator) {
