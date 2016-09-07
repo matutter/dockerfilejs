@@ -31,7 +31,6 @@ Object.keys(instruction).forEach(name => {
     Dockerfile.prototype[name] = function(data, on_build_flag) {
       var from = new InstructionWrap(name, data, on_build_flag, fn)
       var start = this.steps().findIndex(step => step.name != 'comment')
-      console.log('insert FROM @', start)
       this.splice(start, from)
       return this
     }

@@ -1,4 +1,4 @@
-const errors = require('./error.js')
+const errors = require('./instruction_error.js')
 
 function boxAndFilter(arrayOrString) {
   if(!Array.isArray(arrayOrString))

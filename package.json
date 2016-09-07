@@ -1,6 +1,6 @@
 {
   "name": "dockerfilejs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dockerfile-js, render well-formed Dockerfiles.",
   "main": "dockerfile.js",
   "bin": {
