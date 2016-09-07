@@ -18,6 +18,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/matutter/dockerfilejs.git"
   },
+  "engine": "node 4.4.1",
   "keywords": [
     "docker",
     "dockerfile",
