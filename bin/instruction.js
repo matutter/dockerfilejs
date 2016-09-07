@@ -32,6 +32,10 @@ function from(from) {
   const digest = from.digest
   const registry = from.registry
 
+  if(!image && typeof from === 'string') {
+    image = from
+  }
+
   if(image) {
     if(registry) {
       image = registry+'/'+image
