@@ -23,3 +23,27 @@ ENV DEBUG="express:* node index.js"
 EXPOSE [ 8080 ]
 # FROM gets bumped under initial comments
 ```
+
+#### Complex environment? No problem!
+```javascript
+file.env({
+    complex: {
+        objects:  'are not',
+        a: 'problem',
+        at : {
+            all: 'really!'
+        }
+}}).render()
+/*
+ENV complex.objects="are not" \
+    complex.a=problem \
+    complex.at.all=really!
+*/
+```
+
+#### Made a mistake? Get rid of it!
+```javascript
+file.copy('~/.ssh/*', '/tmp')
+// oops!
+file.steps().pop()
+```
