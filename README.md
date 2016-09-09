@@ -47,3 +47,32 @@ file.copy('~/.ssh/*', '/tmp')
 // oops!
 file.steps().pop()
 ```
+
+#### Advanced examples
+```javascript
+file.label({ complex: { objects: 'allowed' } })
+// LABEL complex.objects="allowed"
+
+file.expose([8080, '8081', { number:443, protocol:'tcp' }])
+// EXPOSE [ 8080, 8081, 443/tcp ]
+
+file.copy(['/id_rsa', '/id_rsa.pub', '/root/.ssh/'], true)
+// ONBUILD COPY ["/id_rsa", "/id_rsa.pub", "/root/.ssh"]
+
+file.cmd({executable: '/bin/bash', params: ['-c', 'hello world'] })
+// CMD ["/bin/bash", "-c", "hello world"]
+
+file.cmd({command:'/bin/bash', params: ['-c', 'hello world'] })
+// CMD /bin/bash -c "hello world"
+
+file.healthCheck({
+    options: { retries: 4, timeout: '30s'},
+    command: 'wget',
+    params: ['example.com']
+})
+// HEALTHCHECK --retries=4 --timeout=30s \
+//   CMD wget example.com
+
+file.from({image: 'node', registry:'docker.io', tag:'4-onbuild'})
+// FROM docker.io/node:4-onbuild
+```
