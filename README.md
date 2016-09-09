@@ -56,6 +56,10 @@ file.label({ complex: { objects: 'allowed' } })
 file.expose([8080, '8081', { number:443, protocol:'tcp' }])
 // EXPOSE [ 8080, 8081, 443/tcp ]
 
+.run({command: ['touch /file.txt', ['echo', 'hello world', '>>', '/file.txt']]})
+// RUN touch /file.txt \
+//   && echo "hello world" >> /file.txt
+
 file.copy({ src : ['/id_rsa', '/id_rsa.pub'], dest: '/root/.ssh/' }, true)
 // ONBUILD COPY ["/id_rsa", "/id_rsa.pub", "/root/.ssh"]
 
@@ -75,4 +79,7 @@ file.healthCheck({
 
 file.from({image: 'node', registry:'docker.io', tag:'4-onbuild'})
 // FROM docker.io/node:4-onbuild
+
+file.separator('\n')
+// Will set the separator of each step for the entire file.render() output
 ```
