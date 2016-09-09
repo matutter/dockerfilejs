@@ -56,7 +56,7 @@ file.label({ complex: { objects: 'allowed' } })
 file.expose([8080, '8081', { number:443, protocol:'tcp' }])
 // EXPOSE [ 8080, 8081, 443/tcp ]
 
-file.copy(['/id_rsa', '/id_rsa.pub', '/root/.ssh/'], true)
+file.copy({ src : ['/id_rsa', '/id_rsa.pub'], dest: '/root/.ssh/' }, true)
 // ONBUILD COPY ["/id_rsa", "/id_rsa.pub", "/root/.ssh"]
 
 file.cmd({executable: '/bin/bash', params: ['-c', 'hello world'] })
