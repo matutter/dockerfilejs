@@ -56,7 +56,7 @@ file.label({ complex: { objects: 'allowed' } })
 file.expose([8080, '8081', { number:443, protocol:'tcp' }])
 // EXPOSE [ 8080, 8081, 443/tcp ]
 
-.run({command: ['touch /file.txt', ['echo', 'hello world', '>>', '/file.txt']]})
+file.run({command: ['touch /file.txt', ['echo', 'hello world', '>>', '/file.txt']]})
 // RUN touch /file.txt \
 //   && echo "hello world" >> /file.txt
 
