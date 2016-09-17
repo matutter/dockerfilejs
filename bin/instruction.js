@@ -397,7 +397,7 @@ function volume(volume, onbuild) {
   return onbuild ? onBuild(volume) : volume
 }
 
-
+const valid_healthcheck_options = ['interval', 'timeout', 'retries']
 /**
 * Case:
 *   HEALTHCHECK [OPTIONS] CMD command
@@ -417,9 +417,14 @@ function healthCheck(healthCheck) {
     var options = healthCheck.options
 
     if(options) {
-      options = Object.keys(options).map(k => {
-        return `--${k}=${options[k]}`
-      }).reduce((a,b) => a+' '+b)
+      var keys = Object.keys(options)
+        .filter(option => ~valid_healthcheck_options.indexOf(option))
+
+      if(keys.length) {
+        options = keys.map(k => {
+          return `--${k}=${options[k]}`
+        }).reduce((a,b) => a+' '+b)        
+      }
     }
 
     var command = cmd(healthCheck)
