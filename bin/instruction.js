@@ -58,7 +58,7 @@ function maintainer(maintainer) {
   var instruction = null
   const name = maintainer.name || maintainer
 
-  if(name) {
+  if(name && typeof name === 'string') {
     instruction = `MAINTAINER ${name}`
   } else {
     throw new errors.MissingPropertyError('maintainer', 'name', name)
@@ -109,21 +109,24 @@ function mapCommandParams(command) {
 */
 function run(run) {
   var instruction = null
-  var commands = run.command || run.commands
+  var commands = run.command || run.commands || run
 
-  if(run.command == '' || run.commands == '') {
+  if(commands == '') {
     throw new errors.EmptyStringError('cmd', 'command(s)')
   }
 
   if(commands) {
-    commands = boxAndFilter(commands)
-
-    if(commands.length) {
-      instruction = `RUN ${commands.map(mapCommandParams).join(' \\\n  && ')}`
+    if(typeof commands === 'string') {
+      instruction = `RUN ${commands}`
     } else {
-      throw new errors.EmptyArrayError('cmd', 'command(s)')
-    }
+      commands = boxAndFilter(commands)
 
+      if(commands.length) {
+        instruction = `RUN ${commands.map(mapCommandParams).join(' \\\n  && ')}`
+      } else {
+        throw new errors.EmptyArrayError('cmd', 'command(s)')
+      }
+    }
   } else {
     throw new errors.MissingPropertyError('cmd', 'command(s)', commands)
   }
