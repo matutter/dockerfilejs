@@ -177,7 +177,7 @@ function cmd(cmd) {
       instruction = `CMD ${command}`
   } else {
     if(params && params.length) {
-      instruction = `CMD [${params.map(mapToQuote).join(', ')}]`
+      instruction = `CMD [${params.map(enQuote).join(', ')}]`
     } else {
       throw new errors.MissingPropertyError('cmd', 'params', params)
     }
