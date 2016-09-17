@@ -36,7 +36,7 @@ function from(from) {
     image = from
   }
 
-  if(image) {
+  if(image && (image = image.trim()) && image.length) {
     if(registry) {
       image = registry+'/'+image
     }
