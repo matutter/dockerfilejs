@@ -1,5 +1,5 @@
-const instruction = require('./bin/instruction.js')
-const model = require('./bin/model.js')
+const instruction = require('./lib/instruction.js')
+const model = require('./lib/model.js')
 
 function InstructionWrap(name, data, on_build_flag, fn) {
   this.name = name
