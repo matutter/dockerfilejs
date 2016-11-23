@@ -1,11 +1,8 @@
 {
   "name": "dockerfilejs",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Dockerfile-js, render well-formed Dockerfiles.",
   "main": "dockerfile.js",
-  "bin": {
-    "dockerfilejs": "error.js"
-  },
   "directories": {
     "test": "test"
   },
