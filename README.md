@@ -10,14 +10,14 @@ file.comment('The above code example yields this file!')
   .env({DEBUG:'express:* node index.js'})
   .expose(8080)
   .separator('\n')
-  .from({ image : 'node', tag : '4-onbuild'})
+  .from({ image : 'node', tag : 'latest'})
   .comment('FROM gets bumped under initial comments')
   .render();
 ```
 
 ```Dockerfile
 # The above code example yields this file!
-FROM node:4-onbuild
+FROM node:latest
 ENV DEBUG="express:* node index.js"
 EXPOSE 8080
 # FROM gets bumped under initial comments
