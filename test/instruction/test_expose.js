@@ -2,7 +2,6 @@ var ins = require('../test.js').instruction
 var assert = require('chai').assert
 
 describe('testing instruction expose', () => {
-
   it('should produce EXPOSE 8080', ()=> {
     const result = ins.expose(8080)
     assert.equal(result, 'EXPOSE 8080')
@@ -22,5 +21,4 @@ describe('testing instruction expose', () => {
     const result = ins.expose({ from: 8000, to: '9000', protocol: 'udp' })
     assert.equal(result, 'EXPOSE 8000-9000/udp')
   });
-
 });
