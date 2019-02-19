@@ -84,4 +84,10 @@ file.user('root');
 
 file.from({ image: 'node', registry: 'docker.io', tag: '10-alpine' })
 // FROM docker.io/node:10-alpine
+
+file.stage()
+// Adds a new stage
+
+file.from({ image: 'node', registry: 'docker.io', tag: '10-alpine' })
+// Sets the `FROM` instruction in the new stage, etc ...
 ```

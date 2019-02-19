@@ -10,18 +10,20 @@ function InstructionWrap(name, data, on_build_flag, fn) {
 
 function Dockerfile() {
   var steps = []
+  this.stages = [this]
+  this._current_stage = 0
   this._separator = '\n\n'
   this.steps = () => steps
   this.append = (step) => {
-    steps.push(step);
+    this.getStage().steps().push(step);
     return this
   }
   this.prepend = (step) => {
-    steps.unshift(step);
+    this.getStage().steps().unshift(step);
     return this
   }
   this.splice = (start, step) => {
-    steps.splice(start, 0, step)
+    this.getStage().steps().splice(start, 0, step)
     return this
   }
 }
@@ -44,11 +46,11 @@ Object.keys(instruction).forEach(name => {
 
 /** set step / section separator */
 Dockerfile.prototype.separator = function(separator) {
-  this._separator = separator
+  this.stages.forEach(stage => stage._separator = separator);
   return this
 };
 
-Dockerfile.prototype.renderSteps = function(steps) {
+Dockerfile.prototype.renderSteps = function() {
   // unused parameter
   return this
     .steps()
@@ -56,8 +58,31 @@ Dockerfile.prototype.renderSteps = function(steps) {
 };
 
 Dockerfile.prototype.render = function(steps) {
-  return this.renderSteps(steps).join(this._separator || '\n')
+  return this.stages.map(stage => {
+    return stage.renderSteps(steps).join(this._separator || '\n')
+  }).join(this._separator || '\n')
 };
+
+Dockerfile.prototype.stage = function(stage) {
+  if (stage) {
+    // Rely on index error ...
+    var _ = this.stages[stage];
+  } else {
+    var df = new Dockerfile();
+    // TODO: this is fine for now - there are few things to copy
+    df.separator(this._separator);
+    stage = this.stages.push(df) - 1;
+  }
+
+  // _current_stage == null is the same as make "this" one active
+  this._current_stage = stage;
+
+  return this;
+}
+
+Dockerfile.prototype.getStage = function() {
+  return this.stages[this._current_stage];
+}
 
 module.exports.Dockerfile = Dockerfile
 module.exports.instruction = instruction
