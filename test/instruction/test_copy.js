@@ -27,6 +27,38 @@ describe('testing instruction copy', ()=> {
     })
   })
 
+  describe('with chown flag (shorthand)', ()=> {
+    const expect = 'COPY --chown=42 ["src", "dest"]'
+    it('should produce '+expect, ()=> {
+      const result = ins.copy({ src: ['src'], dest: 'dest', chown: 42 })
+      assert.equal(result, expect)
+    })
+  })
+
+  describe('with chown flag (longhand)', ()=> {
+    const expect = 'COPY --chown=user:group ["src", "dest"]'
+    it('should produce '+expect, ()=> {
+      const result = ins.copy({ src: ['src'], dest: 'dest', chown: 'user:group' })
+      assert.equal(result, expect)
+    })
+  })
+
+  describe('with from flag', ()=> {
+    const expect = 'COPY --from=build ["src", "dest"]'
+    it('should produce '+expect, ()=> {
+      const result = ins.copy({ src: ['src'], dest: 'dest', from: 'build' })
+      assert.equal(result, expect)
+    })
+  })
+
+  describe('with both flags', ()=> {
+    const expect = 'COPY --chown=user:group --from=build ["src", "dest"]'
+    it('should produce '+expect, ()=> {
+      const result = ins.copy({ src: ['src'], dest: 'dest', from: 'build', chown: 'user:group' })
+      assert.equal(result, expect)
+    })
+  })
+
   describe('for invalid input', ()=> {
     it('should throw on either null', ()=> {
       assert.throws(() => { ins.copy({src: null, dest:null}) })
