@@ -2,6 +2,8 @@
 
 # Dockerfilejs
 #### A simple Dockerfile generator. [Try it now!](https://tonicdev.com/npm/dockerfilejs)
+#### [Based on the official Dockerfile Reference](https://docs.docker.com/engine/reference/builder/)
+
 ```javascript
 var Dockerfile = require("dockerfilejs").Dockerfile;
 var file = new Dockerfile();
@@ -65,6 +67,18 @@ file.run({ command: ['touch /file.txt', ['echo', 'hello world', '>>', '/file.txt
 file.copy({ src : ['/id_rsa', '/id_rsa.pub'], dest: '/root/.ssh/' }, true);
 // ONBUILD COPY ["/id_rsa", "/id_rsa.pub", "/root/.ssh"]
 
+file.copy({ src : ['/id_rsa', '/id_rsa.pub'], dest: '/root/.ssh/', onbuild: true });
+// ONBUILD COPY ["/id_rsa", "/id_rsa.pub", "/root/.ssh"]
+
+file.copy({ src : ['/id_rsa'], dest: '/root/.ssh/', chown: '0:0' });
+// COPY --chown=0:0 ["/id_rsa", "/root/.ssh"]
+
+file.copy({ src : ['/id_rsa'], dest: '/root/.ssh/', user: 0, group: 0 });
+// COPY --chown=0:0 ["/id_rsa", "/root/.ssh"]
+
+file.copy({ src : ['/id_rsa'], dest: '/root/.ssh/', chown: { user: 0, group: 0 });
+// COPY --chown=0:0 ["/id_rsa", "/root/.ssh"]
+
 file.cmd({ executable: '/bin/bash', params: ['-c', 'hello world'] });
 // CMD ["/bin/bash", "-c", "hello world"]
 
@@ -85,8 +99,8 @@ file.user('root');
 
 #### Multi-stage builds
 ```javascript
-file.from({ image: 'node', registry: 'docker.io', tag: '10-alpine', stage: 'build' })
-// FROM docker.io/node:10-alpine AS build
+file.from({ image: 'node', tag: '10-alpine', name: 'build' })
+// FROM node:10-alpine AS build
 
 // ... run your build commands here ...
 
