@@ -41,6 +41,17 @@ describe('testing instruction copy', ()=> {
       const result = ins.copy({ src: ['src'], dest: 'dest', chown: 'user:group' })
       assert.equal(result, expect)
     })
+
+    it('should produce '+expect+' (obj syntax shorthand)', ()=> {
+      const result = ins.copy({ src: ['src'], dest: 'dest', user:'user', group:'group' })
+      assert.equal(result, expect)
+    })
+
+    it('should produce '+expect+' (obj syntax longhand)', ()=> {
+      const result = ins.copy({ src: ['src'], dest: 'dest', chown: { user:'user', group:'group'} })
+      assert.equal(result, expect)
+    })
+
   })
 
   describe('with from flag', ()=> {
@@ -49,6 +60,12 @@ describe('testing instruction copy', ()=> {
       const result = ins.copy({ src: ['src'], dest: 'dest', from: 'build' })
       assert.equal(result, expect)
     })
+
+    it('should produce '+expect, ()=> {
+      const result = ins.copy({ src: ['src'], dest: 'dest', from: 'build', user: '' })
+      assert.equal(result, expect)
+    })
+
   })
 
   describe('with both flags', ()=> {

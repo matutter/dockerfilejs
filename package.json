@@ -1,6 +1,6 @@
 {
   "name": "dockerfilejs",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Dockerfile-js, render well-formed Dockerfiles.",
   "main": "dockerfile.js",
   "directories": {
@@ -9,13 +9,15 @@
   "scripts": {
     "test": "mocha ./test --recursive",
     "test-no-colors": "mocha ./test --recursive --no-colors",
-    "test-w-coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/ --recursive"
+    "test-w-coverage": "./node_modules/.bin/nyc -r lcov ./node_modules/mocha/bin/_mocha ./test/ --recursive"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/matutter/dockerfilejs.git"
   },
-  "engine": "node 4.4.1",
+  "engines": {
+    "node" : "^6.0.0"
+  },
   "keywords": [
     "docker",
     "dockerfile",
