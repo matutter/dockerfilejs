@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha ./test --recursive",
     "test-no-colors": "mocha ./test --recursive --no-colors",
-    "test-w-coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/ --recursive"
+    "test-w-coverage": "./node_modules/.bin/nyc -r lcov ./node_modules/mocha/bin/_mocha ./test/ --recursive"
   },
   "repository": {
     "type": "git",
