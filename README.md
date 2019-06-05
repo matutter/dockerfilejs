@@ -81,13 +81,21 @@ file.healthCheck({
 
 file.user('root');
 // USER root
+```
 
-file.from({ image: 'node', registry: 'docker.io', tag: '10-alpine' })
-// FROM docker.io/node:10-alpine
+#### Multi-stage builds
+```javascript
+file.from({ image: 'node', registry: 'docker.io', tag: '10-alpine', stage: 'build' })
+// FROM docker.io/node:10-alpine AS build
+
+// ... run your build commands here ...
 
 file.stage()
 // Adds a new stage
 
 file.from({ image: 'node', registry: 'docker.io', tag: '10-alpine' })
 // Sets the `FROM` instruction in the new stage, etc ...
+
+file.copy({ from: 'build', src: ['./lib'], dest: './lib' })
+// COPY --from=build ["./lib", "./lib"]
 ```
