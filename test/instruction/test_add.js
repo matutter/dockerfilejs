@@ -27,6 +27,22 @@ describe('testing instruction add', ()=> {
     })
   })
 
+  describe('with chown flag (shorthand)', ()=> {
+    const expect = 'ADD --chown=42 ["src", "dest"]'
+    it('should produce '+expect, ()=> {
+      const result = ins.add({ src: ['src'], dest: 'dest', chown: 42 })
+      assert.equal(result, expect)
+    })
+  })
+
+  describe('with chown flag (longhand)', ()=> {
+    const expect = 'ADD --chown=user:group ["src", "dest"]'
+    it('should produce '+expect, ()=> {
+      const result = ins.add({ src: ['src'], dest: 'dest', chown: 'user:group' })
+      assert.equal(result, expect)
+    })
+  })
+
   describe('for invalid input', ()=> {
     it('should throw on either null', ()=> {
       assert.throws(() => { ins.add({src: null, dest:null}) })
