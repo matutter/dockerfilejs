@@ -29,7 +29,7 @@
   "homepage": "https://github.com/matutter/dockerfilejs#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^3.0.2",
+    "coveralls": "^3.0.3",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0"
   }
