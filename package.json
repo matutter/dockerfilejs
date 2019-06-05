@@ -1,6 +1,6 @@
 {
   "name": "dockerfilejs",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Dockerfile-js, render well-formed Dockerfiles.",
   "main": "dockerfile.js",
   "directories": {
@@ -15,7 +15,9 @@
     "type": "git",
     "url": "git+ssh://git@github.com/matutter/dockerfilejs.git"
   },
-  "engine": "node 4.4.1",
+  "engines": {
+    "node" : "^6.0.0"
+  },
   "keywords": [
     "docker",
     "dockerfile",
