@@ -60,6 +60,12 @@ describe('testing instruction copy', ()=> {
       const result = ins.copy({ src: ['src'], dest: 'dest', from: 'build' })
       assert.equal(result, expect)
     })
+
+    it('should produce '+expect, ()=> {
+      const result = ins.copy({ src: ['src'], dest: 'dest', from: 'build', user: '' })
+      assert.equal(result, expect)
+    })
+
   })
 
   describe('with both flags', ()=> {
